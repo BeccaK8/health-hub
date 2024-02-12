@@ -12,6 +12,7 @@ const SignUp = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
+    const [userName, setUserName] = useState('')
 
     const navigate = useNavigate()
 
@@ -20,7 +21,7 @@ const SignUp = (props) => {
 
 		const { msgAlert, setUser } = props
 
-        const credentials = {email, password, passwordConfirmation}
+        const credentials = {email, password, passwordConfirmation, userName}
 
 		signUp(credentials)
 			.then(() => signIn(credentials))
@@ -37,6 +38,7 @@ const SignUp = (props) => {
                 setEmail('')
                 setPassword('')
                 setPasswordConfirmation('')
+                setUserName('')
 				msgAlert({
 					heading: 'Sign Up Failed with error: ' + error.message,
 					message: messages.signUpFailure,
@@ -61,7 +63,7 @@ const SignUp = (props) => {
                             onChange={e => setEmail(e.target.value)}
                         />
                     </Form.Group>
-                    <Form.Group controlId='password'>
+                    <Form.Group controlId='password' className='mt-2'>
                         <Form.Label>Password</Form.Label>
                         <Form.Control
                             required
@@ -72,7 +74,7 @@ const SignUp = (props) => {
                             onChange={e => setPassword(e.target.value)}
                         />
                     </Form.Group>
-                    <Form.Group controlId='passwordConfirmation'>
+                    <Form.Group controlId='passwordConfirmation' className='mt-2'>
                         <Form.Label>Password Confirmation</Form.Label>
                         <Form.Control
                             required
@@ -81,6 +83,16 @@ const SignUp = (props) => {
                             type='password'
                             placeholder='Confirm Password'
                             onChange={e => setPasswordConfirmation(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId='userName' className='mt-2'>
+                        <Form.Label>User Name</Form.Label>
+                        <Form.Control
+                            name='userName'
+                            value={userName}
+                            type='text'
+                            placeholder='Preferred Name'
+                            onChange={e => setUserName(e.target.value)}
                         />
                     </Form.Group>
                     <Button type='submit' className='btn-submit m-2'>
