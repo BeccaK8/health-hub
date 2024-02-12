@@ -11,6 +11,16 @@
     text-decoration: none;
 }
 
+.header-navigation-link {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
+    background-color: $accent-color !important;
+    color: black !important;
+}
+
 .header {
     color: $primary-color;
 }
@@ -23,6 +33,11 @@
 .subheader {
     text-align: center;
     color: $secondary-color;
+}
+
+.accent-text {
+    color: $accent-color;
+    text-decoration: none;
 }
 
 p {
