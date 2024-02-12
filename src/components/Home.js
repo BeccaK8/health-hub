@@ -1,10 +1,28 @@
+import { Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+
 const Home = (props) => {
-	// const { msgAlert, user } = props
+	const { msgAlert, user } = props
 	console.log('props in home', props)
 
 	return (
-		<>
-			<h2>Home Page</h2>
+		<> 
+			<Container className="p-3 wrapper">
+				<Container className="pb-3 p-5 mb-4 bg-light rounded-3">
+					<h1 className="header">Welcome To Health Hub</h1>
+					<h2 className="subheader">Let us help you manage your fitness health</h2>
+					<br />
+					{
+						user
+						?
+						<p style={{textAlign: 'center'}}>Coming soon!</p>
+						:
+						<p style={{textAlign: 'center'}}>
+							<Link to='sign-up' className='navigation-link'>Sign Up</Link> or <Link to='sign-in' className='navigation-link'>Sign In</Link> to get started!
+						</p>
+					}
+				</Container>
+			</Container>
 		</>
 	)
 }

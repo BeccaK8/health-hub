@@ -1,0 +1,26 @@
+@import"./styles/variables";
+@import"./styles/mixins";
+
+.navigation {
+    background-color: $nav-color;
+}
+
+.navigation-link {
+    color: $accent-color;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.header {
+    text-align: center;
+    color: $primary-color;
+}
+
+.subheader {
+    text-align: center;
+    color: $secondary-color;
+}
+
+p {
+    color: $primary-color;
+}
