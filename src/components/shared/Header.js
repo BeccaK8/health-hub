@@ -26,7 +26,7 @@ const authenticatedOptions = (
 				<Link to='change-password' style={ddLinkStyle}>Change Password</Link>
 			</NavDropdown.Item>
 			<NavDropdown.Item eventKey='profile' className='header-navigation-dropdown-link'>
-				Update Profile
+			<Link to='profile' style={ddLinkStyle}>Update Profile</Link>
 			</NavDropdown.Item>
 		</NavDropdown>
 		<Nav.Item className='m-2'>

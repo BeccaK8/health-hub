@@ -12,6 +12,7 @@ import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
+import UpdateProfile from './components/auth/UpdateProfile'
 
 const App = () => {
 
@@ -75,6 +76,14 @@ const App = () => {
 					element={
 						<RequireAuth user={user}>
 							<ChangePassword msgAlert={msgAlert} user={user} />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path='/profile'
+					element={
+						<RequireAuth user={user}>
+							<UpdateProfile msgAlert={msgAlert} user={user} />
 						</RequireAuth>
 					}
 				/>
