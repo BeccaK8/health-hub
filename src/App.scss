@@ -12,6 +12,10 @@
 }
 
 .header {
+    color: $primary-color;
+}
+
+.header-center {
     text-align: center;
     color: $primary-color;
 }
@@ -23,4 +27,11 @@
 
 p {
     color: $primary-color;
+}
+
+// Buttons
+.btn-mine {
+    background-color: $secondary-color !important;
+    border-color: $secondary-color !important;
+    color: $nav-color !important;
 }

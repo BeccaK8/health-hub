@@ -9,7 +9,7 @@ const Home = (props) => {
 		<> 
 			<Container className="p-3 wrapper">
 				<Container className="pb-3 p-5 mb-4 bg-light rounded-3">
-					<h1 className="header">Welcome To Health Hub</h1>
+					<h1 className="header-center">Welcome To Health Hub</h1>
 					<h2 className="subheader">Let us help you manage your fitness health</h2>
 					<br />
 					{
