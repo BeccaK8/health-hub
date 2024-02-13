@@ -2,7 +2,7 @@ import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const Home = (props) => {
-	const { msgAlert, user } = props
+	const { user } = props
 	console.log('props in home', props)
 
 	return (
@@ -15,7 +15,9 @@ const Home = (props) => {
 					{
 						user
 						?
-						<p style={{textAlign: 'center'}}>Coming soon!</p>
+						<p style={{textAlign: 'center'}}>
+							<Link to='today' className='navigation-link'>See what's planned for today!</Link>
+						</p>
 						:
 						<p style={{textAlign: 'center'}}>
 							<Link to='sign-up' className='navigation-link'>Sign Up</Link> or <Link to='sign-in' className='navigation-link'>Sign In</Link> to get started!

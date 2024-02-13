@@ -55,3 +55,10 @@ p {
     border-color: $secondary-color !important;
     color: $nav-color !important;
 }
+
+// Cards
+.card-title {
+    background-color: $secondary-color;
+    padding: 4px;
+    text-align: center;
+}

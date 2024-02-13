@@ -8,6 +8,7 @@ const messages = {
 	changePasswordFailure: 'Failed to change passwords. Check your old password and try again.',
 	updateProfileSuccess: 'Profile updated successfully!',
 	updateProfileFailure: 'Failed to update profile. Please try again.',
+	generalError: 'An error has occurred'
 }
 
 module.exports = messages

@@ -67,7 +67,7 @@ const Header = ({ user }) => (
 		<Navbar.Collapse id='basic-navbar-nav'>
 			<Nav className='ms-auto'>
 				{user && (
-					<span className='accent-text mt-2 mr-5'>Welcome, { user.userName ? user.userName : user.email}&nbsp;&nbsp;&nbsp;</span>
+					<span className='accent-text mt-2 ms-2 mr-5'>Welcome, { user.userName ? user.userName : user.email}&nbsp;&nbsp;&nbsp;</span>
 				)}
 				{alwaysOptions}
 				{user ? authenticatedOptions : unauthenticatedOptions}

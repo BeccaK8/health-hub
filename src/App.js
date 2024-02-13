@@ -13,6 +13,7 @@ import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
 import UpdateProfile from './components/auth/UpdateProfile'
+import HealthDateMine from './components/healthDates/HealthDateMine'
 
 const App = () => {
 
@@ -84,6 +85,22 @@ const App = () => {
 					element={
 						<RequireAuth user={user}>
 							<UpdateProfile msgAlert={msgAlert} user={user} />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path='/dates/:showDate'
+					element={
+						<RequireAuth user={user}>
+							<HealthDateMine msgAlert={msgAlert} user={user} />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path='/today'
+					element={
+						<RequireAuth user={user}>
+							<HealthDateMine msgAlert={msgAlert} user={user} />
 						</RequireAuth>
 					}
 				/>
