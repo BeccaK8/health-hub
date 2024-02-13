@@ -1,42 +1,90 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import get_formatted_health_date from '../../lib/get_formatted_health_date'
+
+import HealthDateNavButton from './HealthDateNavButton'
 
 const HealthDateNavigation = (props) => {
 
-    const { msgAlert, user } = props
+    const { handleClick, changeDate, triggerRefresh, msgAlert, user, showDate } = props
 
-    const [ showDate, setShowDate ] = useState(props.showDate)
+    // const [ showDate, setShowDate ] = useState(props.showDate)
+    // const [ dateDivs, setDateDivs ] = useState([])
+    // const [ updated, setUpdated ] = useState(false)
+
     const showDateObj = new Date(showDate)
-    console.log('showDateObj = ', showDateObj)
+    // console.log('showDateObj = ', showDateObj)
+
+    const onClick = () => {
+
+        console.log('made it to this onclick in HealthDateNavigation')
+        // setUpdated(prev => !prev)
+        triggerRefresh()
+        // setShowDate(props.showDate)
+        // handleClick()
+    }
     
     const diff = showDateObj.getDate() - showDateObj.getDay() + (showDateObj.getDay() === 0 ? 6 : 1)
     const startOfWeek = new Date(showDateObj.setDate(diff))
 
-    let dateDivs = []
-    dateDivs.push(<div><FontAwesomeIcon icon={ faChevronLeft }/></div>)
-    for (let i = 0; i < 7; i++) {
-        const thisCardDate = new Date(startOfWeek)
-        thisCardDate.setDate(startOfWeek.getDate() + i)
-        const formattedHealthDate = get_formatted_health_date(thisCardDate)
-        const showing = (formattedHealthDate === showDate)
-        // console.log(`showing = ${showing}, formattedHealthDate = ${formattedHealthDate}, showDate=${showDate}`)
+    //useEffect(() => {
+        const dateDivs = []
+        // console.log('in healthdatenav useeffect')
+        // console.log('old date divs = ', dateDivs)
+
+        /* handle prev week button */
+        const prevWeekDate = new Date(startOfWeek)
+        prevWeekDate.setDate(startOfWeek.getDate() - 7)
         dateDivs.push(
-            <div key={ formattedHealthDate } className={ showing ? 'selected-date' : 'unselected-date'}>{ thisCardDate.toLocaleString('default', { day: 'numeric' }) }</div>
+            <HealthDateNavButton
+                thisCardDate={prevWeekDate}
+                showDate={showDate}
+                displayValue='left'
+                handleClick={onClick}
+                changeDate={changeDate}
+            />
         )
-    }
-    dateDivs.push(<div><FontAwesomeIcon icon={ faChevronRight }/></div>)
+
+        /* show daily buttons for this week */
+        // newDateDivs.push(<div key='left' className='date-nav-div'><FontAwesomeIcon icon={ faChevronLeft }/></div>)
+        for (let i = 0; i < 7; i++) {
+            const thisCardDate = new Date(startOfWeek)
+            thisCardDate.setDate(startOfWeek.getDate() + i)
+            dateDivs.push(
+                <HealthDateNavButton 
+                    thisCardDate={thisCardDate} 
+                    showDate={showDate} 
+                    handleClick={onClick}
+                    changeDate={changeDate}
+                />
+            )
+        }
+
+        /* handle next week button */
+        const nextWeekDate = new Date(startOfWeek)
+        nextWeekDate.setDate(startOfWeek.getDate() + 7)
+        dateDivs.push(
+            <HealthDateNavButton
+                thisCardDate={nextWeekDate}
+                showDate={showDate}
+                displayValue='right'
+                handleClick={onClick}
+                changeDate={changeDate}
+            />
+        )
+
+        // newDateDivs.push(<div key='right' className='date-nav-div'><FontAwesomeIcon icon={ faChevronRight }/></div>)
+      //  setDateDivs(newDateDivs)
+        // console.log('new date divs = ', dateDivs)
+    //}, [])
+
 
     return (
         <>
-            <Container className='date-nav-section'>
-                <div className='month-nav'>
+            <Container key='date-nav-section' className='date-nav-section'>
+                <div key='month-nav' className='month-nav'>
                     { showDateObj.toLocaleString('default', { month: 'long'}) }
                 </div>
-                <div className='date-nav'>
+                <div key='date-nav' className='date-nav'>
                     { dateDivs }
                 </div>
             </Container>
