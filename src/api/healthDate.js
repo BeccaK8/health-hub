@@ -11,3 +11,15 @@ export const getOneHealthDateByDate = (dateStr, user) => {
         },
     })
 }
+
+// CREATE -> Add a health date
+export const createHealthDate = (user, newHealthDate) => {
+    return axios({
+        url: `${apiUrl}/dates`,
+        method: 'POST',
+        headers: {
+            Authorization: `Token token=${user.token}`
+        },
+        data: { healthDate: newHealthDate }
+    })
+}

@@ -8,6 +8,9 @@ const messages = {
 	changePasswordFailure: 'Failed to change passwords. Check your old password and try again.',
 	updateProfileSuccess: 'Profile updated successfully!',
 	updateProfileFailure: 'Failed to update profile. Please try again.',
+	createHealthDateSuccess: 'Overall plans for this date were saved successfully.',
+	updateHealthDateSuccess: 'Overall plans for this date were updated successfully.',
+	deleteHealthDateSuccess: 'Overall plans for this date were deleted successfully.',
 	generalError: 'An error has occurred'
 }
 

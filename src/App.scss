@@ -87,6 +87,14 @@ p {
     color: white !important;
 }
 
+.card-btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: auto;
+}
+
 // Date Navigation
 .date-nav-section {
     display: flex;
