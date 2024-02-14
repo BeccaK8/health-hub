@@ -1,14 +1,13 @@
 // This form will be used by both HealthDateCreate and HealthDateUpdate
 import { Form, Button, Container } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 
 const HealthDateForm = (props) => {
 
-    const { healthDate, handleChange, handleSubmit, heading } = props
+    const { healthDate, handleChange, handleSubmit, handleCancel, heading } = props
 
     return (
         <Container className="justify-content-center mt-1">
-            <h3 className='header-center'>{ heading }</h3>
+            <h3 className='header-center pb-1'>{ heading }</h3>
             <Form onSubmit={handleSubmit} className='mt-1'>
                 <Form.Group className='m-2'>
                     <Form.Label>Daily Goal Mantra:</Form.Label>
@@ -35,9 +34,7 @@ const HealthDateForm = (props) => {
                 </Form.Group>
                 <div className='card-btn-group'>
                     <Button className="card-btn m-2" type="submit">Save</Button>
-                    <Link to="/" className="btn btn-secondary">
-                        Cancel
-                    </Link>
+                    {/* <Button className="btn-secondary m-2" onClick={handleCancel}>Cancel</Button> */}
                 </div>
             </Form>
         </Container>

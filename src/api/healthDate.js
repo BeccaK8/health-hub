@@ -24,6 +24,18 @@ export const createHealthDate = (user, newHealthDate) => {
     })
 }
 
+// UPDATE -> Adjust a health date
+export const updateHealthDate = (user, updatedHealthDate) => {
+    return axios({
+        url: `${apiUrl}/dates/${updatedHealthDate._id}`,
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token token=${user.token}`
+        },
+        data: { healthDate: updatedHealthDate }
+    })
+}
+
 // DELETE -> Clear a date completely
 export const removeHealthDate = (user, id) => {
     return axios({

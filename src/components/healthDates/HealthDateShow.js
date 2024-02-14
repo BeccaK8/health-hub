@@ -1,16 +1,15 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { Card, Button } from "react-bootstrap"
 
 import { get_formatted_health_date } from "../../lib/health_date_helper_functions"
 import HealthDateForm from "../shared/HealthDateForm"
-import { createHealthDate, removeHealthDate } from '../../api/healthDate'
+import { createHealthDate, updateHealthDate, removeHealthDate } from '../../api/healthDate'
 import messages from '../shared/AutoDismissAlert/messages'
+import EditHealthDateModal from './EditHealthDateModal'
 
 const HealthDateShow = (props) => {
 
     const { showDate, healthDate, triggerRefresh, user, msgAlert } = props
-    const navigate = useNavigate()
     const dateFound = Object.keys(healthDate).length > 0
     const isPlannable = dateFound ? healthDate.isPlannable : showDate >= get_formatted_health_date(new Date())
 
@@ -19,6 +18,21 @@ const HealthDateShow = (props) => {
         goalStatement: '',
         focusArea: ''
     })
+    const [updated, setUpdated] = useState(false)
+
+    const handleCancel = () => {
+        setUpdated(prev => !prev)
+        triggerRefresh()
+    }
+    
+    useEffect(() => {
+        console.log('is this even being called????????')
+        setNewHealthDate({
+            goalStatement: '',
+            focusArea: ''
+        })
+        console.log('reset new health date',  newHealthDate)
+    }, [updated])
 
     const onCreateChange = (evt) => {
         evt.persist()
@@ -83,66 +97,78 @@ const HealthDateShow = (props) => {
     }
 
     return (
-        <Card key={ healthDate ? healthDate._id : 'new_card' }>
-            <Card.Title className='card-title bg-opacity-25'>
-                { showDate }
-            </Card.Title>
-            <Card.Body className='card-body'>
-                {
-                    dateFound
-                    ?
-                    <Card.Text>
-                        Goal Statement: { healthDate.goalStatement }
-                        <br />
-                        Focus Area: { healthDate.focusArea }
-                    </Card.Text>
-                    :
-                    <>
-                        {
-                            isPlannable
-                            ?
-                            <>   
-                                <HealthDateForm 
-                                    healthDate={healthDate}
-                                    handleChange={onCreateChange}
-                                    handleSubmit={onCreateSubmit}
-                                    heading='Start planning...'
-                                />
-                            </>
-                            :
-                            <h3 className='header-center'>No plans found...<br/>and we can't add any since the date is in the past</h3>
-                        }
-                    </>
-                }
-
-            </Card.Body>
-            <Card.Footer>
-                {
-                    dateFound && isPlannable
-                    ?
-                        <div className='card-btn-group'>
-                            <Button
-                                className="m-2"
-                                variant="warning"
-                                onClick={() => setEditModalShow(true)}
-                            >
-                                Edit
-                            </Button>
-                            <Button
-                                className="m-2"
-                                variant="danger"
-                                onClick={() => clearDayCompletely(true)}
-                            >
-                                Delete
-                            </Button>
-                        </div>
-                    : 
+        <>
+            <Card key={ healthDate ? healthDate._id : 'new_card' }>
+                <Card.Title className='card-title bg-opacity-25'>
+                    { showDate }
+                </Card.Title>
+                <Card.Body className='card-body'>
+                    {
+                        dateFound
+                        ?
+                        <Card.Text>
+                            Goal Statement: { healthDate.goalStatement }
+                            <br />
+                            Focus Area: { healthDate.focusArea }
+                        </Card.Text>
+                        :
                         <>
-                            <small>No change can be made as this date is in the past</small>
+                            {
+                                isPlannable
+                                ?
+                                <>   
+                                    <HealthDateForm 
+                                        healthDate={healthDate}
+                                        handleChange={onCreateChange}
+                                        handleSubmit={onCreateSubmit}
+                                        handleCancel={handleCancel}
+                                        heading='Start planning...'
+                                    />
+                                </>
+                                :
+                                <h3 className='header-center'>No plans found...<br/>and we can't add any since the date is in the past</h3>
+                            }
                         </>
-                }
-            </Card.Footer>
-        </Card>
+                    }
+
+                </Card.Body>
+                <Card.Footer>
+                    {
+                        dateFound && isPlannable
+                        ?
+                            <div className='card-btn-group'>
+                                <Button
+                                    className="m-2"
+                                    variant="warning"
+                                    onClick={() => setEditModalShow(true)}
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                    className="m-2"
+                                    variant="danger"
+                                    onClick={() => clearDayCompletely(true)}
+                                >
+                                    Delete
+                                </Button>
+                            </div>
+                        : 
+                            <>
+                                <small>No change can be made as this date is in the past</small>
+                            </>
+                    }
+                </Card.Footer>
+            </Card>
+            <EditHealthDateModal 
+                user={user}
+                show={editModalShow}
+                updateHealthDate={updateHealthDate}
+                msgAlert={msgAlert}
+                handleClose={() => setEditModalShow(false)}
+                healthDate={healthDate}
+                triggerRefresh={triggerRefresh}
+            />
+        </>
     )
 }
 
