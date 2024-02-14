@@ -2,9 +2,8 @@ import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const Home = (props) => {
-	const { user } = props
-	console.log('props in home', props)
 
+	const { user } = props
 	return (
 		<> 
 			<Container className="p-3 wrapper">
@@ -16,7 +15,7 @@ const Home = (props) => {
 						user
 						?
 						<p style={{textAlign: 'center'}}>
-							<Link to='today' className='navigation-link'>See what's planned for today!</Link>
+							<Link to='dates' className='navigation-link'>See what's planned for today!</Link>
 						</p>
 						:
 						<p style={{textAlign: 'center'}}>

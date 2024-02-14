@@ -89,7 +89,7 @@ const App = () => {
 					}
 				/>
 				<Route
-					path='/dates/:showDate'
+					path='/dates'
 					element={
 						<RequireAuth user={user}>
 							<HealthDateMine msgAlert={msgAlert} user={user} />
@@ -97,7 +97,7 @@ const App = () => {
 					}
 				/>
 				<Route
-					path='/today'
+					path='/dates/:showDate'
 					element={
 						<RequireAuth user={user}>
 							<HealthDateMine msgAlert={msgAlert} user={user} />
