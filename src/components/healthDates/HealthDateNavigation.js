@@ -11,20 +11,37 @@ const HealthDateNavigation = (props) => {
     // const [ dateDivs, setDateDivs ] = useState([])
     // const [ updated, setUpdated ] = useState(false)
 
-    const showDateObj = new Date(showDate)
-    // console.log('showDateObj = ', showDateObj)
+    console.log('showDate = ', showDate)
+
+    // const dateWithoutTimezone = (date) => {
+    //     const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
+    //     const withoutTimezone = new Date(date.valueOf() - tzoffset)
+    //         .toISOString()
+    //         .slice(0, -1);
+    //     return withoutTimezone;
+    // };
+
+    // const dateNoTZ = dateWithoutTimezone(new Date(showDate))
+    // console.log('dateNoTZ = ', dateNoTZ)
+    // const showDateObj = new Date(dateNoTZ)
+    // try {
+        const showDateObj = new Date(showDate + 'T00:00:00.000')
+    // } catch InvalidDate
+    console.log('showDateObj = ', showDateObj)
 
     const onClick = () => {
-
         console.log('made it to this onclick in HealthDateNavigation')
         // setUpdated(prev => !prev)
         triggerRefresh()
         // setShowDate(props.showDate)
         // handleClick()
     }
-    
-    const diff = showDateObj.getDate() - showDateObj.getDay() + (showDateObj.getDay() === 0 ? 6 : 1)
+    console.log('showDateObj.getDay() = ', showDateObj.getDay())
+    const daysToGetBackToMonday = 0 - showDateObj.getDay() + (showDateObj.getDay() === 0 ? -6 : 1)
+    console.log('daysToGetBackToMonday = ', daysToGetBackToMonday)
+    const diff = showDateObj.getDate() - showDateObj.getDay() + (showDateObj.getDay() === 0 ? -6 : 1)
     const startOfWeek = new Date(showDateObj.setDate(diff))
+    console.log('startOfWeek = ', startOfWeek)
 
     //useEffect(() => {
         const dateDivs = []
@@ -33,7 +50,7 @@ const HealthDateNavigation = (props) => {
 
         /* handle prev week button */
         const prevWeekDate = new Date(startOfWeek)
-        prevWeekDate.setDate(startOfWeek.getDate() - 7)
+        prevWeekDate.setDate(startOfWeek.getDate() - 1)
         dateDivs.push(
             <HealthDateNavButton
                 thisCardDate={prevWeekDate}

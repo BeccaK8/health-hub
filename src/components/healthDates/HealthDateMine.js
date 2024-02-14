@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 
 import { getOneHealthDateByDate } from '../../api/healthDate'
@@ -15,14 +15,6 @@ const HealthDateMine = (props) => {
 
     const { msgAlert, user } = props
 
-    
-    // let { showDate } = useParams()
-    // console.log('beginning of HealthDateMine: showDate = ', showDate)
-    
-    // if (!showDate) {
-    //     showDate = get_formatted_health_date(new Date())
-    // }
-    // console.log('after if at beginning of HealthDateMine: showDate = ', showDate)
     const [showDate, setShowDate] = useState(get_formatted_health_date(new Date()))
     const [healthDate, setHealthDate] = useState(null)
     const [updated, setUpdated] = useState(false)
@@ -48,7 +40,6 @@ const HealthDateMine = (props) => {
     if (!healthDate) {
         return <LoadingScreen />
     }
-
     
     return (
         <>
@@ -58,10 +49,6 @@ const HealthDateMine = (props) => {
                         showDate={showDate}
                         msgAlert={msgAlert}
                         user={user}
-                        // handleClick={() => {
-                        //     console.log('clicked a date nav button')
-                        //     setUpdated(prev => !prev)
-                        // }}
                         changeDate={setShowDate}
                         triggerRefresh={() => setUpdated(prev => prev = !prev)}
                     />

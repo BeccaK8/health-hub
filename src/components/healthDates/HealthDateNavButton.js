@@ -9,9 +9,13 @@ const HealthDateNavButton = (props) => {
     const showing = (formattedHealthDate === showDate)
 
     const handleDateClick = (evt) => {
-        console.log('event = ', evt.target.id)
-        changeDate(evt.target.id)
-        handleClick()
+        console.log('event id of clicked div is = ', evt.target.id)
+        if (evt.target.id) {
+            changeDate(evt.target.id)
+            handleClick()
+        } else {
+            console.log('no div targeted so staying here')
+        }
     }
 
     return (
