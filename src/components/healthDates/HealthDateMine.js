@@ -56,7 +56,6 @@ const HealthDateMine = (props) => {
                             showDate={showDate}
                             user={user}
                             msgAlert={msgAlert}
-                            updateParentState={setHealthDate}
                             triggerRefresh={() => setUpdated(prev => prev = !prev)}
                         />   
                     </Container>

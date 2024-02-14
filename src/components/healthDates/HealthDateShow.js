@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import { Card } from "react-bootstrap"
 import { useNavigate } from 'react-router-dom'
+import { Card, Button } from "react-bootstrap"
 
 import { get_formatted_health_date } from "../../lib/health_date_helper_functions"
 import HealthDateForm from "../shared/HealthDateForm"
-import { createHealthDate } from '../../api/healthDate'
+import { createHealthDate, removeHealthDate } from '../../api/healthDate'
 import messages from '../shared/AutoDismissAlert/messages'
 
 const HealthDateShow = (props) => {
 
-    const { showDate, healthDate, updateParentState, triggerRefresh, user, msgAlert } = props
+    const { showDate, healthDate, triggerRefresh, user, msgAlert } = props
     const navigate = useNavigate()
     const dateFound = Object.keys(healthDate).length > 0
     const isPlannable = dateFound ? healthDate.isPlannable : showDate >= get_formatted_health_date(new Date())
@@ -42,7 +42,6 @@ const HealthDateShow = (props) => {
         console.log('new health date: ', newHealthDate)
         createHealthDate(user, newHealthDate)
             .then(() => triggerRefresh())
-            // .then(res => { navigate(`/dates/${res.data.healthDate.dateString}`)})
             .then(() => {
                 msgAlert({
                     heading: 'Oh Yeah!',
@@ -52,11 +51,35 @@ const HealthDateShow = (props) => {
             })
             .catch(err => {
                 msgAlert({
+                    heading: 'Oh No!',
+                    message: messages.generalError,
+                    variant: 'danger'
+                })
+            })
+    }
+
+    // Edit State
+    const [editModalShow, setEditModalShow] = useState(false)
+
+    // Handle Delete
+    const clearDayCompletely = () => {
+        removeHealthDate(user, healthDate._id)
+            .then(() => {
+                msgAlert({
+                    heading: 'Oh Yeah!',
+                    message: messages.deleteHealthDateSuccess,
+                    variant: 'success'
+                })
+            })
+            .then(() => triggerRefresh())
+            .catch(err => {
+                msgAlert({
                     heading: 'Oh no!',
                     message: messages.generalError,
                     variant: 'danger'
                 })
             })
+
     }
 
     return (
@@ -85,7 +108,6 @@ const HealthDateShow = (props) => {
                                     handleSubmit={onCreateSubmit}
                                     heading='Start planning...'
                                 />
-                                {/* <Button className='card-btn'>Let's Make Plans for { showDate }</Button>  */}
                             </>
                             :
                             <h3 className='header-center'>No plans found...<br/>and we can't add any since the date is in the past</h3>
@@ -96,11 +118,28 @@ const HealthDateShow = (props) => {
             </Card.Body>
             <Card.Footer>
                 {
-                    dateFound || isPlannable
+                    dateFound && isPlannable
                     ?
-                        <small>buttons go here</small>
+                        <div className='card-btn-group'>
+                            <Button
+                                className="m-2"
+                                variant="warning"
+                                onClick={() => setEditModalShow(true)}
+                            >
+                                Edit
+                            </Button>
+                            <Button
+                                className="m-2"
+                                variant="danger"
+                                onClick={() => clearDayCompletely(true)}
+                            >
+                                Delete
+                            </Button>
+                        </div>
                     : 
-                        <></>
+                        <>
+                            <small>No change can be made as this date is in the past</small>
+                        </>
                 }
             </Card.Footer>
         </Card>

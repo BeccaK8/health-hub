@@ -23,3 +23,14 @@ export const createHealthDate = (user, newHealthDate) => {
         data: { healthDate: newHealthDate }
     })
 }
+
+// DELETE -> Clear a date completely
+export const removeHealthDate = (user, id) => {
+    return axios({
+        url: `${apiUrl}/dates/${id}`,
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token token=${user.token}`
+        }
+    })
+}
