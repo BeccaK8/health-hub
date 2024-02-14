@@ -6,6 +6,13 @@ import HealthDateForm from "../shared/HealthDateForm"
 import { createHealthDate, updateHealthDate, removeHealthDate } from '../../api/healthDate'
 import messages from '../shared/AutoDismissAlert/messages'
 import EditHealthDateModal from './EditHealthDateModal'
+import FitnessPlanShow from '../fitnessPlans/FitnessPlanShow'
+
+const planCardContainerLayout = {
+    display: 'flex',
+    justifyContent: 'center',
+    flexFlow: 'row wrap'
+}
 
 const HealthDateShow = (props) => {
 
@@ -96,6 +103,20 @@ const HealthDateShow = (props) => {
 
     }
 
+    // Build our Plan Cards
+    let fitnessPlanCards
+    if (healthDate) {
+        if (healthDate.fitnessPlans.length > 0) {
+            fitnessPlanCards = healthDate.fitnessPlans.map(fPlan => (
+                <FitnessPlanShow 
+                    fitnessPlan={fPlan}
+                />
+            ))
+        } else {
+            fitnessPlanCards = <p>No plans set up for this date</p>
+        }
+    }
+
     return (
         <>
             <Card key={ healthDate ? healthDate._id : 'new_card' }>
@@ -158,6 +179,13 @@ const HealthDateShow = (props) => {
                             </>
                     }
                 </Card.Footer>
+            </Card>
+            <Card key={ Date.now() + Math.random() } className='mt-2'>
+                <Card.Title className='card-title bg-opacity-50'  style={{fontSize: '2vh'}}>Fitness Plans
+                </Card.Title>
+                <Card.Body style={planCardContainerLayout}> 
+                    { fitnessPlanCards }
+                </Card.Body>
             </Card>
             <EditHealthDateModal 
                 user={user}
