@@ -47,8 +47,6 @@ const HealthDateMine = (props) => {
                 <div className='col-sm-10 col-md-8 mx-auto mt-5 pb-3 p-5 mb-4 bg-light rounded-3'>
                     <HealthDateNavigation 
                         showDate={showDate}
-                        msgAlert={msgAlert}
-                        user={user}
                         changeDate={setShowDate}
                         triggerRefresh={() => setUpdated(prev => prev = !prev)}
                     />

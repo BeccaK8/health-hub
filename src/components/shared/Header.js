@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightFromBracket, faGear } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faRightFromBracket, faGear } from '@fortawesome/free-solid-svg-icons'
 
 const linkStyle = {
     color: 'white',
