@@ -9,14 +9,7 @@ const HealthDateNavButton = (props) => {
     const showing = (formattedHealthDate === showDate)
 
     const handleDateClick = (evt) => {
-
-        let theDiv;
-        if (evt.target.nodeName === 'DIV') {
-            theDiv = evt.target
-        } else {
-            theDiv = evt.target.closest("DIV")
-        }
-
+        const theDiv = (evt.target.nodeName === 'DIV') ? evt.target : evt.target.closest("DIV")
         const newDate = theDiv.id;
         if (newDate) {
             changeDate(newDate)

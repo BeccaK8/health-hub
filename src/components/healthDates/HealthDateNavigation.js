@@ -8,7 +8,9 @@ const HealthDateNavigation = (props) => {
 
     // console.log('showDate = ', showDate)
     const showDateObj = new Date(showDate + 'T00:00:00.000')
+    const month = showDateObj.toLocaleString('default', { month: 'long'})
     // console.log('showDateObj = ', showDateObj)
+    // console.log('showDateObj month = ', month)
 
     const onClick = () => {
         triggerRefresh()
@@ -64,7 +66,7 @@ const HealthDateNavigation = (props) => {
         <>
             <Container key='date-nav-section' className='date-nav-section'>
                 <h1 className='month-nav'>
-                    { showDateObj.toLocaleString('default', { month: 'long'}) }
+                    { month }
                 </h1>
                 <div key='date-nav' className='date-nav'>
                     { dateDivs }
