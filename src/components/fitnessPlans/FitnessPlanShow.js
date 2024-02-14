@@ -23,7 +23,7 @@ const FitnessPlanShow = (props) => {
             {
                 fitnessPlan.type === 'ClassPlan'
                 ?
-                    <Card className='m-2'>
+                    <Card className='m-2' key={ fitnessPlan._id }>
                         <Card.Header style={setBgCondition(fitnessPlan.type)}>{fitnessPlan.name}</Card.Header>
                         <Card.Body>
                             <small>Host: { fitnessPlan.host }</small>

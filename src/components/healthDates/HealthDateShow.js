@@ -105,7 +105,7 @@ const HealthDateShow = (props) => {
 
     // Build our Plan Cards
     let fitnessPlanCards
-    if (healthDate) {
+    if (dateFound) {
         if (healthDate.fitnessPlans.length > 0) {
             fitnessPlanCards = healthDate.fitnessPlans.map(fPlan => (
                 <FitnessPlanShow 
@@ -173,20 +173,30 @@ const HealthDateShow = (props) => {
                                     Delete
                                 </Button>
                             </div>
-                        : 
-                            <>
-                                <small>No change can be made as this date is in the past</small>
-                            </>
+                        :
+                            !isPlannable
+                            ?
+                                <>
+                                    <small>No change can be made as this date is in the past</small>
+                                </>
+                            :
+                                <></>
                     }
                 </Card.Footer>
             </Card>
-            <Card key={ Date.now() + Math.random() } className='mt-2'>
-                <Card.Title className='card-title bg-opacity-50'  style={{fontSize: '2vh'}}>Fitness Plans
-                </Card.Title>
-                <Card.Body style={planCardContainerLayout}> 
-                    { fitnessPlanCards }
-                </Card.Body>
-            </Card>
+            {
+                dateFound
+                ?
+                    <Card key={ Date.now() + Math.random() } className='mt-2'>
+                        <Card.Title className='card-title bg-opacity-50'  style={{fontSize: '2vh'}}>Fitness Plans
+                        </Card.Title>
+                        <Card.Body style={planCardContainerLayout}> 
+                            { fitnessPlanCards }
+                        </Card.Body>
+                    </Card>
+                :
+                    <></>
+            }
             <EditHealthDateModal 
                 user={user}
                 show={editModalShow}
