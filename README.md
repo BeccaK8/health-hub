@@ -24,7 +24,7 @@ It is a MERN Stack client application, built with React and Node.js and interact
 
 Note: A user will not have a health date created for a specific date until they begin to plan healthy activities for that day.
 
-- AAU, I want to get all the dates I have plans created for
+- AAU, I want to navigate through the dates on a calendar and see the health plan associated with that date, if it exists
 - AAU, I want to get a specific date and all the information associated with it
 - AAU, I want to create a new date that I can associate health plans with
 - AAU, I want to update the focus area and personal statement for a particular date
@@ -42,14 +42,14 @@ Note: A user will not have a health date created for a specific date until they 
 
 Trello board for managing client application user stories:
 
-![Client Trello Board](./public/readme/us_client.png)
+![Client Trello Board](./public/assets/readme/us_client.png)
 
 
 ## Wireframes
 
 Main "Show" page with navigation bar and calendar navigation
 
-![Main Show Page](./public/readme/wf_mainshow.png)
+![Main Show Page](./public/assets/readme/wf_mainshow.png)
 
 Modals to Add, Update, and Delete Exercise and Class Fitness Plans
 
@@ -57,11 +57,11 @@ Modals to Add, Update, and Delete Exercise and Class Fitness Plans
 
 User Profile Screen
 
-![User Profile](./public/readme/wf_userprofile.png)
+![User Profile](./public/assets/readme/wf_userprofile.png)
 
 Personal Fitness Goals Index Page
 
-![Personal Goals Index](./public/readme/wf_personalGoalsIndex.png)
+![Personal Goals Index](./public/assets/readme/wf_personalGoalsIndex.png)
 
 
 ## Technologies Used
