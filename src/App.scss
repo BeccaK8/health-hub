@@ -74,6 +74,19 @@ p {
     text-align: center;
 }
 
+.card-body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: auto;
+}
+
+.card-btn {
+    background-color: #54428E !important;
+    border-color: #54428E !important;
+    color: white !important;
+}
+
 // Date Navigation
 .date-nav-section {
     display: flex;

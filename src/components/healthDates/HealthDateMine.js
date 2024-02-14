@@ -8,7 +8,7 @@ import HealthDateNavigation from "./HealthDateNavigation"
 import HealthDateShow from './HealthDateShow'
 import LoadingScreen from '../shared/LoadingScreen'
 
-import get_formatted_health_date from '../../lib/get_formatted_health_date'
+import { get_formatted_health_date } from '../../lib/health_date_helper_functions'
 import messages from '../shared/AutoDismissAlert/messages'
 
 const HealthDateMine = (props) => {
@@ -54,7 +54,7 @@ const HealthDateMine = (props) => {
                         <HealthDateShow 
                             healthDate={healthDate}
                             showDate={showDate}
-                        />    
+                        />   
                     </Container>
                 </div>
             </div>

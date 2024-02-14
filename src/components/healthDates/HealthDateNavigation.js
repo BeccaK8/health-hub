@@ -1,13 +1,14 @@
 import { Container } from 'react-bootstrap'
 
 import HealthDateNavButton from './HealthDateNavButton'
+import { get_health_date_object } from '../../lib/health_date_helper_functions'
 
 const HealthDateNavigation = (props) => {
 
     const { changeDate, triggerRefresh, showDate } = props
 
     // console.log('showDate = ', showDate)
-    const showDateObj = new Date(showDate + 'T00:00:00.000')
+    const showDateObj = get_health_date_object(showDate)
     const month = showDateObj.toLocaleString('default', { month: 'long'})
     // console.log('showDateObj = ', showDateObj)
     // console.log('showDateObj month = ', month)
@@ -63,16 +64,14 @@ const HealthDateNavigation = (props) => {
     )
 
     return (
-        <>
-            <Container key='date-nav-section' className='date-nav-section'>
-                <h1 className='month-nav'>
-                    { month }
-                </h1>
-                <div key='date-nav' className='date-nav'>
-                    { dateDivs }
-                </div>
-            </Container>
-        </>
+        <Container key={ Date.now() + Math.random() } className='date-nav-section'>
+            <h1 className='month-nav' key={ Date.now() + Math.random() }>
+                { month }
+            </h1>
+            <div key={ Date.now() + Math.random() } className='date-nav'>
+                { dateDivs }
+            </div>
+        </Container>
     )
 }
 

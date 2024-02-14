@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
-import get_formatted_health_date from '../../lib/get_formatted_health_date'
+import { get_formatted_health_date } from '../../lib/health_date_helper_functions'
 
 const HealthDateNavButton = (props) => {
     const { thisCardDate, showDate, handleClick, displayValue, changeDate } = props
@@ -21,7 +21,7 @@ const HealthDateNavButton = (props) => {
 
     return (
         <div 
-            key={`div_${formattedHealthDate}` } 
+            key={ Date.now() + Math.random() } 
             className={ showing ? 'date-nav-div selected-date' : 'date-nav-div unselected-date'}
             onClick={handleDateClick}
             id={ formattedHealthDate }
@@ -31,9 +31,9 @@ const HealthDateNavButton = (props) => {
                 ?
                     displayValue === 'left'
                     ?
-                    <FontAwesomeIcon icon={ faChevronLeft } data-id={ formattedHealthDate } />
+                    <FontAwesomeIcon icon={ faChevronLeft } key={ Date.now() + Math.random() } />
                     : 
-                    <FontAwesomeIcon icon={ faChevronRight } data-id={ formattedHealthDate } />
+                    <FontAwesomeIcon icon={ faChevronRight } key={ Date.now() + Math.random() } />
                 :
                 thisCardDate.toLocaleString('default', { day: '2-digit' })
             }
