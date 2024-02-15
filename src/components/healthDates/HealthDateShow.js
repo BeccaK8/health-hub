@@ -159,8 +159,7 @@ const HealthDateShow = (props) => {
                         ?
                             <div className='card-btn-group'>
                                 <Button
-                                    className="m-2"
-                                    variant="warning"
+                                    className="m-2 card-btn"
                                     onClick={() => setEditModalShow(true)}
                                 >
                                     Edit
@@ -174,7 +173,7 @@ const HealthDateShow = (props) => {
                                 </Button>
                             </div>
                         :
-                            !isPlannable
+                            dateFound && !isPlannable
                             ?
                                 <>
                                     <small>No change can be made as this date is in the past</small>
