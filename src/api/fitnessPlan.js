@@ -13,3 +13,15 @@ export const createFitnessPlan = (healthDate, newFitnessPlan, user) => {
         data: { fitnessPlan: newFitnessPlan }
     })
 }
+
+// Delete fitness plan
+// DELETE /fitness/:healthDateId/:fitnessPlanId
+export const removeFitnessPlan = (user, healthDateId, fitnessPlanId) => {
+    return axios({
+        url: `${apiUrl}/fitness/${healthDateId}/${fitnessPlanId}`,
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token token=${user.token}`
+        }
+    })
+}

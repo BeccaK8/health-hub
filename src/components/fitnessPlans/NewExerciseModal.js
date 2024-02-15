@@ -14,7 +14,6 @@ const NewExerciseModal = (props) => {
 
     const [newExercise, setNewExercise] = useState({})
 
-
     const onChange = (evt) => {
         evt.persist()
         setNewExercise( prevExer => {
@@ -33,6 +32,7 @@ const NewExerciseModal = (props) => {
         addFitnessPlanType()
     }
 
+    // API needs to distinguish between class and exercise
     const addFitnessPlanType = () => {
         setNewExercise( prevExer => {
             const updatedExer = { type : 'ExercisePlan' }
@@ -44,9 +44,7 @@ const NewExerciseModal = (props) => {
 
     const onSubmit = (evt) => {
         evt.preventDefault()
-        // API needs to distinguish between class and exercise
         addFitnessPlanType()
-        console.log('new exercise to be saved is = ', newExercise)
         createFitnessPlan(healthDate, newExercise, user)
             .then(() => handleClose())
             .then(() => {

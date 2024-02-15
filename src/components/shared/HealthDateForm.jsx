@@ -3,7 +3,7 @@ import { Form, Button, Container } from 'react-bootstrap'
 
 const HealthDateForm = (props) => {
 
-    const { healthDate, handleChange, handleSubmit, handleCancel, heading } = props
+    const { healthDate, handleChange, handleSubmit, heading } = props
 
     return (
         <Container className="justify-content-center mt-1">

@@ -39,10 +39,7 @@ const HealthDateShow = (props) => {
     
     useEffect(() => {
         console.log('is this even being called????????')
-        setNewHealthDate({
-            goalStatement: '',
-            focusArea: ''
-        })
+        setNewHealthDate(healthDate)
         console.log('reset new health date',  newHealthDate)
     }, [updated])
 
@@ -67,7 +64,7 @@ const HealthDateShow = (props) => {
         evt.preventDefault()
         console.log('new health date: ', newHealthDate)
         createHealthDate(user, newHealthDate)
-            .then(() => triggerRefresh())
+            .then(() => triggerShowRefresh())
             .then(() => {
                 msgAlert({
                     heading: 'Oh Yeah!',
@@ -117,6 +114,7 @@ const HealthDateShow = (props) => {
                     user={user}
                     msgAlert={msgAlert}
                     triggerRefresh={triggerRefresh}
+                    isPlannable={isPlannable}
                 />
             ))
         } else {
@@ -232,7 +230,7 @@ const HealthDateShow = (props) => {
                 msgAlert={msgAlert}
                 handleClose={() => setEditModalShow(false)}
                 healthDate={healthDate}
-                triggerRefresh={triggerRefresh}
+                triggerRefresh={triggerShowRefresh}
             />
             <NewClassModal
                 healthDate={healthDate}

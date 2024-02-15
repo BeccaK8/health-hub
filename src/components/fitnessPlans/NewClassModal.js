@@ -38,6 +38,7 @@ const NewClassModal = (props) => {
         addFitnessPlanType()
     }
 
+    // API needs to distinguish between class and exercise
     const addFitnessPlanType = () => {
         setNewClass( prevClass => {
             const updatedClass = { type : 'ClassPlan' }
@@ -49,9 +50,7 @@ const NewClassModal = (props) => {
 
     const onSubmit = (evt) => {
         evt.preventDefault()
-        // API needs to distinguish between class and exercise
         addFitnessPlanType()
-        console.log('new class to be saved is = ', newClass)
         createFitnessPlan(healthDate, newClass, user)
             .then(() => handleClose())
             .then(() => {
