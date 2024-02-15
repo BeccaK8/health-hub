@@ -8,6 +8,7 @@ import messages from '../shared/AutoDismissAlert/messages'
 import EditHealthDateModal from './EditHealthDateModal'
 import FitnessPlanShow from '../fitnessPlans/FitnessPlanShow'
 import NewClassModal from '../fitnessPlans/NewClassModal'
+import NewExerciseModal from '../fitnessPlans/NewExerciseModal'
 
 const planCardContainerLayout = {
     display: 'flex',
@@ -28,6 +29,7 @@ const HealthDateShow = (props) => {
     })
     const [editModalShow, setEditModalShow] = useState(false)
     const [classModalShow, setClassModalShow] = useState(false)
+    const [exerciseModalShow, setExerciseModalShow] = useState(false)
     const [updated, setUpdated] = useState(false)
 
     const triggerShowRefresh = () => {
@@ -83,8 +85,6 @@ const HealthDateShow = (props) => {
             })
     }
 
-
-
     // Handle Delete
     const clearDayCompletely = () => {
         removeHealthDate(user, healthDate._id)
@@ -103,7 +103,6 @@ const HealthDateShow = (props) => {
                     variant: 'danger'
                 })
             })
-
     }
 
     // Build our Plan Cards
@@ -211,6 +210,12 @@ const HealthDateShow = (props) => {
                                             >
                                             Add Class
                                         </Button>
+                                        <Button
+                                            className="m-2 card-btn"
+                                            onClick={() => setExerciseModalShow(true)}
+                                            >
+                                            Add Exercise
+                                        </Button>
                                     </div>
                                 </Card.Footer>
                             :
@@ -235,6 +240,14 @@ const HealthDateShow = (props) => {
                 user={user}
                 msgAlert={msgAlert}
                 handleClose={() => setClassModalShow(false)}
+                triggerRefresh={triggerShowRefresh}
+            />
+            <NewExerciseModal
+                healthDate={healthDate}
+                show={exerciseModalShow}
+                user={user}
+                msgAlert={msgAlert}
+                handleClose={() => setExerciseModalShow(false)}
                 triggerRefresh={triggerShowRefresh}
             />
         </>
