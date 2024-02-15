@@ -11,6 +11,9 @@ const messages = {
 	createHealthDateSuccess: 'Overall plans for this date were saved successfully.',
 	updateHealthDateSuccess: 'Overall plans for this date were updated successfully.',
 	deleteHealthDateSuccess: 'Overall plans for this date were deleted successfully.',
+	createFitnessPlanSuccess: 'Fitness plan for this date was saved successfully.',
+	updateFitnessPlanSuccess: 'Fitness plan for this date was updated successfully.',
+	deleteFitnessPlanSuccess: 'Fitness plan for this date was deleted successfully.',
 	generalError: 'An error has occurred'
 }
 

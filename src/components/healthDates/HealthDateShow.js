@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react'
 import { Card, Button } from "react-bootstrap"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit ,faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { get_formatted_health_date } from "../../lib/health_date_helper_functions"
 import HealthDateForm from "../shared/HealthDateForm"
 import { createHealthDate, updateHealthDate, removeHealthDate } from '../../api/healthDate'
 import messages from '../shared/AutoDismissAlert/messages'
 import EditHealthDateModal from './EditHealthDateModal'
+import DeleteConfirmationModal from '../shared/DeleteConfirmationModal'
 import FitnessPlanShow from '../fitnessPlans/FitnessPlanShow'
+import NewClassModal from '../fitnessPlans/NewClassModal'
+import NewExerciseModal from '../fitnessPlans/NewExerciseModal'
 
 const planCardContainerLayout = {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'start',
     flexFlow: 'row wrap'
 }
 
@@ -25,20 +31,21 @@ const HealthDateShow = (props) => {
         goalStatement: '',
         focusArea: ''
     })
+    const [editModalShow, setEditModalShow] = useState(false)
+    const [deleteModalShow, setDeleteModalShow] = useState(false)
+    const [classModalShow, setClassModalShow] = useState(false)
+    const [exerciseModalShow, setExerciseModalShow] = useState(false)
     const [updated, setUpdated] = useState(false)
 
-    const handleCancel = () => {
+    const triggerShowRefresh = () => {
         setUpdated(prev => !prev)
         triggerRefresh()
     }
     
     useEffect(() => {
-        console.log('is this even being called????????')
-        setNewHealthDate({
-            goalStatement: '',
-            focusArea: ''
-        })
-        console.log('reset new health date',  newHealthDate)
+        // console.log('is this even being called????????')
+        setNewHealthDate(healthDate)
+        // console.log('reset new health date',  newHealthDate)
     }, [updated])
 
     const onCreateChange = (evt) => {
@@ -60,9 +67,9 @@ const HealthDateShow = (props) => {
 
     const onCreateSubmit = (evt) => {
         evt.preventDefault()
-        console.log('new health date: ', newHealthDate)
+        // console.log('new health date: ', newHealthDate)
         createHealthDate(user, newHealthDate)
-            .then(() => triggerRefresh())
+            .then(() => triggerShowRefresh())
             .then(() => {
                 msgAlert({
                     heading: 'Oh Yeah!',
@@ -70,6 +77,7 @@ const HealthDateShow = (props) => {
                     variant: 'success'
                 })
             })
+            .then(() => setNewHealthDate({}))
             .catch(err => {
                 msgAlert({
                     heading: 'Oh No!',
@@ -78,9 +86,6 @@ const HealthDateShow = (props) => {
                 })
             })
     }
-
-    // Edit State
-    const [editModalShow, setEditModalShow] = useState(false)
 
     // Handle Delete
     const clearDayCompletely = () => {
@@ -100,16 +105,25 @@ const HealthDateShow = (props) => {
                     variant: 'danger'
                 })
             })
-
     }
 
     // Build our Plan Cards
     let fitnessPlanCards
     if (dateFound) {
         if (healthDate.fitnessPlans.length > 0) {
+            healthDate.fitnessPlans.sort((a, b) => (
+                a.type.localeCompare(b.type)
+                || a.name.localeCompare(b.name)
+            ))
             fitnessPlanCards = healthDate.fitnessPlans.map(fPlan => (
                 <FitnessPlanShow 
+                    key={fPlan._id}
                     fitnessPlan={fPlan}
+                    healthDate={healthDate}
+                    user={user}
+                    msgAlert={msgAlert}
+                    triggerRefresh={triggerRefresh}
+                    isPlannable={isPlannable}
                 />
             ))
         } else {
@@ -142,7 +156,7 @@ const HealthDateShow = (props) => {
                                         healthDate={healthDate}
                                         handleChange={onCreateChange}
                                         handleSubmit={onCreateSubmit}
-                                        handleCancel={handleCancel}
+                                        handleCancel={triggerShowRefresh}
                                         heading='Start planning...'
                                     />
                                 </>
@@ -158,19 +172,17 @@ const HealthDateShow = (props) => {
                         dateFound && isPlannable
                         ?
                             <div className='card-btn-group'>
-                                <Button
-                                    className="m-2 card-btn"
-                                    onClick={() => setEditModalShow(true)}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    className="m-2"
-                                    variant="danger"
-                                    onClick={() => clearDayCompletely(true)}
-                                >
-                                    Delete
-                                </Button>
+                                <FontAwesomeIcon 
+                                    icon={faEdit} 
+                                    className="text-dark cursor" 
+                                    onClick={() => setEditModalShow(true)} 
+                                />
+                                &nbsp; &nbsp;
+                                <FontAwesomeIcon 
+                                    icon={faTrash} 
+                                    className="text-danger cursor" 
+                                    onClick={() => setDeleteModalShow(true)} 
+                                />
                             </div>
                         :
                             dateFound && !isPlannable
@@ -192,6 +204,28 @@ const HealthDateShow = (props) => {
                         <Card.Body style={planCardContainerLayout}> 
                             { fitnessPlanCards }
                         </Card.Body>
+                        {
+                            isPlannable
+                            ?
+                                <Card.Footer>
+                                    <div className='card-btn-group'>
+                                        <Button
+                                            className="m-2 card-btn"
+                                            onClick={() => setClassModalShow(true)}
+                                            >
+                                            Add Class
+                                        </Button>
+                                        <Button
+                                            className="m-2 card-btn"
+                                            onClick={() => setExerciseModalShow(true)}
+                                            >
+                                            Add Exercise
+                                        </Button>
+                                    </div>
+                                </Card.Footer>
+                            :
+                                <></>
+                        }
                     </Card>
                 :
                     <></>
@@ -203,7 +237,29 @@ const HealthDateShow = (props) => {
                 msgAlert={msgAlert}
                 handleClose={() => setEditModalShow(false)}
                 healthDate={healthDate}
-                triggerRefresh={triggerRefresh}
+                triggerRefresh={triggerShowRefresh}
+            />
+            <DeleteConfirmationModal 
+                showModal={deleteModalShow}
+                confirmModal={clearDayCompletely}
+                handleClose={() => setDeleteModalShow(false)}
+                message={`Are you sure you want to delete goal statement, focus area, and plans for ${ healthDate.dateString }?`}
+            />
+            <NewClassModal
+                healthDate={healthDate}
+                show={classModalShow}
+                user={user}
+                msgAlert={msgAlert}
+                handleClose={() => setClassModalShow(false)}
+                triggerRefresh={triggerShowRefresh}
+            />
+            <NewExerciseModal
+                healthDate={healthDate}
+                show={exerciseModalShow}
+                user={user}
+                msgAlert={msgAlert}
+                handleClose={() => setExerciseModalShow(false)}
+                triggerRefresh={triggerShowRefresh}
             />
         </>
     )
