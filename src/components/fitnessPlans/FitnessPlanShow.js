@@ -99,6 +99,7 @@ const FitnessPlanShow = (props) => {
                             <FontAwesomeIcon 
                                 icon={faCheck} 
                                 className="text-dark cursor" 
+                                title="Plan Completed!"
                             />
 
                         </div>
