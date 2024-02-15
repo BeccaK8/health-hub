@@ -83,8 +83,21 @@ const FitnessPlanShow = (props) => {
                         </>
                     :
                         <>
-                            <small>Reps: { fitnessPlan.reps }</small>
-                            <small>Sets: { fitnessPlan.sets }</small>
+                            {
+                                fitnessPlan.reps
+                                ?
+                                    <small>Reps: { fitnessPlan.reps }</small>
+
+                                :
+                                <></>
+                            }
+                            {
+                                fitnessPlan.sets
+                                ?
+                                    <small>Sets: { fitnessPlan.sets }</small>
+                                :
+                                <></>
+                            }
                         </>
                 }
                 </Card.Body>

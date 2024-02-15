@@ -69,13 +69,15 @@ const EditHealthDateModal = (props) => {
 
     return (
         <Modal show={show} onHide={handleModalClose}>
-            <Modal.Header closeButton />
+            <Modal.Header closeButton>
+                <Modal.Title>Update your plan...</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 <HealthDateForm 
                     healthDate={healthDateForm}
                     handleChange={onChange}
                     handleSubmit={onSubmit}
-                    heading="Update your plan..."
+                    handleCancel={handleModalClose}
                 />
             </Modal.Body>
         </Modal>

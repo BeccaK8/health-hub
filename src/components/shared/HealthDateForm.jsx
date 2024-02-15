@@ -3,11 +3,17 @@ import { Form, Button, Container } from 'react-bootstrap'
 
 const HealthDateForm = (props) => {
 
-    const { healthDate, handleChange, handleSubmit, heading } = props
+    const { healthDate, handleChange, handleSubmit, handleCancel, heading } = props
 
     return (
         <Container className="justify-content-center mt-1">
-            <h3 className='header-center pb-1'>{ heading }</h3>
+            {
+                heading
+                ?
+                    <h3 className='header-center pb-1'>{ heading }</h3>
+                :
+                    <></>
+            }
             <Form onSubmit={handleSubmit} className='mt-1'>
                 <Form.Group className='m-2'>
                     <Form.Label>Daily Goal Mantra:</Form.Label>
@@ -17,9 +23,10 @@ const HealthDateForm = (props) => {
                         name="goalStatement"
                         value={ healthDate.goalStatement }
                         onChange={handleChange}
-                    />
+                        />
                 </Form.Group>
                 <Form.Group className='m-2'>
+                    <Form.Label>Primary Focus Area:</Form.Label>
                     <Form.Select 
                         aria-label="focus area"
                         name="focusArea"
@@ -34,7 +41,7 @@ const HealthDateForm = (props) => {
                 </Form.Group>
                 <div className='card-btn-group'>
                     <Button className="card-btn m-2" type="submit">Save</Button>
-                    {/* <Button className="btn-secondary m-2" onClick={handleCancel}>Cancel</Button> */}
+                    <Button className="btn-secondary m-2" onClick={handleCancel}>Cancel</Button>
                 </div>
             </Form>
         </Container>
