@@ -16,6 +16,7 @@ import NewExerciseModal from '../fitnessPlans/NewExerciseModal'
 const planCardContainerLayout = {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'start',
     flexFlow: 'row wrap'
 }
 
@@ -110,6 +111,10 @@ const HealthDateShow = (props) => {
     let fitnessPlanCards
     if (dateFound) {
         if (healthDate.fitnessPlans.length > 0) {
+            healthDate.fitnessPlans.sort((a, b) => (
+                a.type.localeCompare(b.type)
+                || a.name.localeCompare(b.name)
+            ))
             fitnessPlanCards = healthDate.fitnessPlans.map(fPlan => (
                 <FitnessPlanShow 
                     key={fPlan._id}
