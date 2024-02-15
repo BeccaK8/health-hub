@@ -7,6 +7,7 @@ import { createHealthDate, updateHealthDate, removeHealthDate } from '../../api/
 import messages from '../shared/AutoDismissAlert/messages'
 import EditHealthDateModal from './EditHealthDateModal'
 import FitnessPlanShow from '../fitnessPlans/FitnessPlanShow'
+import NewClassModal from '../fitnessPlans/NewClassModal'
 
 const planCardContainerLayout = {
     display: 'flex',
@@ -25,9 +26,11 @@ const HealthDateShow = (props) => {
         goalStatement: '',
         focusArea: ''
     })
+    const [editModalShow, setEditModalShow] = useState(false)
+    const [classModalShow, setClassModalShow] = useState(false)
     const [updated, setUpdated] = useState(false)
 
-    const handleCancel = () => {
+    const triggerShowRefresh = () => {
         setUpdated(prev => !prev)
         triggerRefresh()
     }
@@ -70,6 +73,7 @@ const HealthDateShow = (props) => {
                     variant: 'success'
                 })
             })
+            .then(() => setNewHealthDate({}))
             .catch(err => {
                 msgAlert({
                     heading: 'Oh No!',
@@ -79,8 +83,7 @@ const HealthDateShow = (props) => {
             })
     }
 
-    // Edit State
-    const [editModalShow, setEditModalShow] = useState(false)
+
 
     // Handle Delete
     const clearDayCompletely = () => {
@@ -109,7 +112,12 @@ const HealthDateShow = (props) => {
         if (healthDate.fitnessPlans.length > 0) {
             fitnessPlanCards = healthDate.fitnessPlans.map(fPlan => (
                 <FitnessPlanShow 
+                    key={fPlan._id}
                     fitnessPlan={fPlan}
+                    healthDate={healthDate}
+                    user={user}
+                    msgAlert={msgAlert}
+                    triggerRefresh={triggerRefresh}
                 />
             ))
         } else {
@@ -142,7 +150,7 @@ const HealthDateShow = (props) => {
                                         healthDate={healthDate}
                                         handleChange={onCreateChange}
                                         handleSubmit={onCreateSubmit}
-                                        handleCancel={handleCancel}
+                                        handleCancel={triggerShowRefresh}
                                         heading='Start planning...'
                                     />
                                 </>
@@ -192,6 +200,22 @@ const HealthDateShow = (props) => {
                         <Card.Body style={planCardContainerLayout}> 
                             { fitnessPlanCards }
                         </Card.Body>
+                        {
+                            isPlannable
+                            ?
+                                <Card.Footer>
+                                    <div className='card-btn-group'>
+                                        <Button
+                                            className="m-2 card-btn"
+                                            onClick={() => setClassModalShow(true)}
+                                            >
+                                            Add Class
+                                        </Button>
+                                    </div>
+                                </Card.Footer>
+                            :
+                                <></>
+                        }
                     </Card>
                 :
                     <></>
@@ -204,6 +228,14 @@ const HealthDateShow = (props) => {
                 handleClose={() => setEditModalShow(false)}
                 healthDate={healthDate}
                 triggerRefresh={triggerRefresh}
+            />
+            <NewClassModal
+                healthDate={healthDate}
+                show={classModalShow}
+                user={user}
+                msgAlert={msgAlert}
+                handleClose={() => setClassModalShow(false)}
+                triggerRefresh={triggerShowRefresh}
             />
         </>
     )
