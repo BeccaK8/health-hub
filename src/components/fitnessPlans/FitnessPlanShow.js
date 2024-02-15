@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Card } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { removeFitnessPlan } from '../../api/fitnessPlan'
 import messages from '../shared/AutoDismissAlert/messages'
 import DeleteConfirmationModal from '../shared/DeleteConfirmationModal'
+import EditClassModal from './EditClassModal'
 
 const setBgCondition = (planType) => {
     if (planType === 'ClassPlan') {
@@ -21,7 +22,9 @@ const FitnessPlanShow = (props) => {
 
     const { user, healthDate, fitnessPlan, msgAlert, triggerRefresh, isPlannable } = props
 
-    const [showDeleteConfirmationModal, setShowDeleteConfirmationModel] = useState(false)
+    const [editClassModalShow, setEditClassModalShow] = useState(false)
+    const [editExerciseModalShow, setEditExerciseModalShow] = useState(false)
+    const [deleteModalShow, setDeleteModalShow] = useState(false)
 
     // Handle Delete
     const clearFitnessPlan = () => {
@@ -89,16 +92,20 @@ const FitnessPlanShow = (props) => {
                                 isPlannable
                                 ?
                                     <div className='card-btn-group'>
-                                        {/* <Button
-                                            className="m-2 card-btn"
-                                            //onClick={() => setEditModalShow(true)}
-                                        >
-                                            Edit
-                                        </Button>  */}
+                                        <FontAwesomeIcon 
+                                            icon={faEdit} 
+                                            className="text-dark cursor" 
+                                            onClick={() => 
+                                                (fitnessPlan.type === 'ClassPlan')
+                                                ? setEditClassModalShow(true)
+                                                : setEditExerciseModalShow(true)
+                                            }
+                                        />
+                                        &nbsp; &nbsp;
                                         <FontAwesomeIcon 
                                             icon={faTrash} 
                                             className="text-danger cursor" 
-                                            onClick={() => setShowDeleteConfirmationModel(true)} 
+                                            onClick={() => setDeleteModalShow(true)} 
                                         />
                                     </div>
                                 :
@@ -106,10 +113,19 @@ const FitnessPlanShow = (props) => {
                             }
                 </Card.Footer>
             </Card>
+            <EditClassModal
+                user={user}
+                healthDate={healthDate}
+                fitnessPlan={fitnessPlan}
+                show={editClassModalShow}
+                handleClose={() => setEditClassModalShow(false)}
+                msgAlert={msgAlert}
+                triggerRefresh={triggerRefresh}
+            />
             <DeleteConfirmationModal 
-                showModal={showDeleteConfirmationModal}
+                showModal={deleteModalShow}
                 confirmModal={clearFitnessPlan}
-                handleClose={() => setShowDeleteConfirmationModel(false)}
+                handleClose={() => setDeleteModalShow(false)}
                 message={`Are you sure you want to delete ${ fitnessPlan.name }?`}
             />
         </>

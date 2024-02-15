@@ -20,7 +20,7 @@ const EditHealthDateModal = (props) => {
         handleClose()
     }
     useEffect(() => {
-        if (props.healthDate._id === healthDateForm._id) {
+        if (props.healthDate._id !== healthDateForm._id) {
             setHealthDateForm(props.healthDate)
         }
     }, [updated])

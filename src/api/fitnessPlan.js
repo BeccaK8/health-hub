@@ -14,6 +14,19 @@ export const createFitnessPlan = (healthDate, newFitnessPlan, user) => {
     })
 }
 
+// Update fitness plan
+// PATCH /fitness/:healthDateId/:fitnessPlanId
+export const updateFitnessPlan = (user, healthDate, updatedFitnessPlan) => {
+    return axios({
+        url: `${apiUrl}/fitness/${healthDate._id}/${updatedFitnessPlan._id}`,
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token token=${user.token}`
+        },
+        data: { fitnessPlan: updatedFitnessPlan }
+    })
+}
+
 // Delete fitness plan
 // DELETE /fitness/:healthDateId/:fitnessPlanId
 export const removeFitnessPlan = (user, healthDateId, fitnessPlanId) => {
