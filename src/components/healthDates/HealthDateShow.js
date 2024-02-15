@@ -25,6 +25,7 @@ const HealthDateShow = (props) => {
     const { showDate, healthDate, triggerRefresh, user, msgAlert } = props
     const dateFound = Object.keys(healthDate).length > 0
     const isPlannable = dateFound ? healthDate.isPlannable : showDate >= get_formatted_health_date(new Date())
+    const isTrackable = dateFound && healthDate.isTrackable
 
     // Create State
     const [ newHealthDate, setNewHealthDate ] = useState({
@@ -124,6 +125,7 @@ const HealthDateShow = (props) => {
                     msgAlert={msgAlert}
                     triggerRefresh={triggerRefresh}
                     isPlannable={isPlannable}
+                    isTrackable={isTrackable}
                 />
             ))
         } else {

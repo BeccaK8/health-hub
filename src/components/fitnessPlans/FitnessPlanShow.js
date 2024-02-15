@@ -1,16 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import { removeFitnessPlan } from '../../api/fitnessPlan'
+import { updateFitnessPlan, removeFitnessPlan } from '../../api/fitnessPlan'
 import messages from '../shared/AutoDismissAlert/messages'
 import DeleteConfirmationModal from '../shared/DeleteConfirmationModal'
 import EditClassModal from './EditClassModal'
 import EditExerciseModal from './EditExerciseModal'
+import CompletePlanModal from './CompletePlanModal'
 
-const setBgCondition = (planType) => {
-    if (planType === 'ClassPlan') {
+const setBgCondition = (completed, planType) => {
+    if (completed) {
+        return ({backgroundColor: '#91C499'})
+    } else if (planType === 'ClassPlan') {
         return ({backgroundColor: '#cbc6dd'})
     } else if (planType === 'ExercisePlan') {
         return ({backgroundColor: '#f0f1ba'})
@@ -21,11 +24,47 @@ const setBgCondition = (planType) => {
 
 const FitnessPlanShow = (props) => {
 
-    const { user, healthDate, fitnessPlan, msgAlert, triggerRefresh, isPlannable } = props
+    const { user, healthDate, msgAlert, triggerRefresh, isPlannable, isTrackable } = props
 
+    const [fitnessPlan, setFitnessPlan] = useState(props.fitnessPlan)
+    const [updated, setUpdated] = useState(false)
     const [editClassModalShow, setEditClassModalShow] = useState(false)
     const [editExerciseModalShow, setEditExerciseModalShow] = useState(false)
+    const [completePlanModalShow, setCompletePlanModalShow] = useState(false)
     const [deleteModalShow, setDeleteModalShow] = useState(false)
+
+    // Handle Complete Fitness Plan
+    const updateCompleted = () => {
+        console.log('made it to updateCompleted()')
+        setFitnessPlan( prevClass => {
+            const updatedClass = { completed : true }
+            return {
+                ...prevClass, ...updatedClass
+            }
+        })
+        setUpdated(prev => !prev)
+    }
+
+    const completeFitnessPlan = () => {
+        console.log('fitnessPlan can be completed = ', fitnessPlan)
+        updateFitnessPlan(user, healthDate, fitnessPlan)
+            .then(() => setCompletePlanModalShow(false))
+            .then(() => {
+                msgAlert({
+                    heading: 'Oh Yeah!',
+                    message: messages.updateFitnessPlanSuccess,
+                    variant: 'success'
+                })
+            })
+            .then(() => triggerRefresh())
+            .catch(err => {
+                msgAlert({
+                    heading: 'Oh No!',
+                    message: messages.generalError,
+                    variant: 'danger'
+                })
+            })
+    }
 
     // Handle Delete
     const clearFitnessPlan = () => {
@@ -50,7 +89,19 @@ const FitnessPlanShow = (props) => {
     return (
         <>
             <Card className='m-2' key={ fitnessPlan._id }>
-                <Card.Header style={setBgCondition(fitnessPlan.type)}>{fitnessPlan.name}</Card.Header>
+                <Card.Header style={setBgCondition(fitnessPlan.completed, fitnessPlan.type)}>
+                    {fitnessPlan.name}
+                    {
+                        fitnessPlan.completed
+                        ?
+                        <FontAwesomeIcon 
+                            icon={faCheck} 
+                            className="text-success cursor" 
+                        />
+                        :
+                        <></>
+                    }
+                </Card.Header>
                 <Card.Body>
                     {
                         fitnessPlan.type === 'ClassPlan'
@@ -103,9 +154,27 @@ const FitnessPlanShow = (props) => {
                 </Card.Body>
                         <Card.Footer>
                             {
-                                isPlannable
+                                isPlannable || isTrackable
                                 ?
-                                    <div className='card-btn-group'>
+                                <div className='card-btn-group'>
+                                {
+                                    isTrackable
+                                    ?
+                                    <>
+                                        <FontAwesomeIcon 
+                                            icon={faCheck} 
+                                            className="text-success cursor" 
+                                            onClick={() => setCompletePlanModalShow(true)}
+                                        />
+                                        &nbsp; &nbsp;
+                                    </>
+                                    :
+                                    <></>
+                                }
+                                {
+                                    isPlannable
+                                    ?
+                                    <>
                                         <FontAwesomeIcon 
                                             icon={faEdit} 
                                             className="text-dark cursor" 
@@ -114,16 +183,20 @@ const FitnessPlanShow = (props) => {
                                                 ? setEditClassModalShow(true)
                                                 : setEditExerciseModalShow(true)
                                             }
-                                        />
+                                            />
                                         &nbsp; &nbsp;
                                         <FontAwesomeIcon 
                                             icon={faTrash} 
                                             className="text-danger cursor" 
                                             onClick={() => setDeleteModalShow(true)} 
-                                        />
-                                    </div>
-                                :
+                                            />
+                                    </>
+                                    :
                                     <></>
+                                }
+                                </div>
+                                :
+                                <></>
                             }
                 </Card.Footer>
             </Card>
@@ -144,6 +217,24 @@ const FitnessPlanShow = (props) => {
                 handleClose={() => setEditExerciseModalShow(false)}
                 msgAlert={msgAlert}
                 triggerRefresh={triggerRefresh}
+            />
+            <CompletePlanModal 
+                user={user}
+                fitnessPlan={fitnessPlan}
+                showModal={completePlanModalShow}
+                handleClose={() => setCompletePlanModalShow(false)}
+                msgAlert={msgAlert}
+                healthDate={healthDate}
+                triggerRefresh={triggerRefresh}
+                alertClass={
+                    fitnessPlan.completed
+                    ? 'danger'
+                    : 'success'
+                }
+                message={
+                    fitnessPlan.completed 
+                    ? `Uncheck if you did not complete ${ fitnessPlan.name }: `
+                    : `Check if you completed ${ fitnessPlan.name }: `}
             />
             <DeleteConfirmationModal 
                 showModal={deleteModalShow}
