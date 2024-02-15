@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Card, Button } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
@@ -45,12 +45,13 @@ const FitnessPlanShow = (props) => {
 
     return (
         <>
-            {
-                fitnessPlan.type === 'ClassPlan'
-                ?
-                    <Card className='m-2' key={ fitnessPlan._id }>
-                        <Card.Header style={setBgCondition(fitnessPlan.type)}>{fitnessPlan.name}</Card.Header>
-                        <Card.Body>
+            <Card className='m-2' key={ fitnessPlan._id }>
+                <Card.Header style={setBgCondition(fitnessPlan.type)}>{fitnessPlan.name}</Card.Header>
+                <Card.Body>
+                    {
+                        fitnessPlan.type === 'ClassPlan'
+                        ?
+                        <>
                             <small>Host: { fitnessPlan.host }</small>
                             {
                                 fitnessPlan.location
@@ -75,7 +76,14 @@ const FitnessPlanShow = (props) => {
                                 :
                                 <></>
                             }
-                        </Card.Body>
+                        </>
+                    :
+                        <>
+                            <small>Reps: { fitnessPlan.reps }</small>
+                            <small>Sets: { fitnessPlan.sets }</small>
+                        </>
+                }
+                </Card.Body>
                         <Card.Footer>
                             {
                                 isPlannable
@@ -92,30 +100,12 @@ const FitnessPlanShow = (props) => {
                                             className="text-danger cursor" 
                                             onClick={() => setShowDeleteConfirmationModel(true)} 
                                         />
-                                        {/* <Button
-                                            className="m-2"
-                                            variant="danger"
-                                            onClick={() => clearFitnessPlan(true)}
-                                        >
-                                            Delete
-                                        </Button> */}
                                     </div>
                                 :
                                     <></>
                             }
-                        </Card.Footer>
-                    </Card>
-                :
-                    <Card className='m-2' key={ fitnessPlan._id }>
-                        <Card.Header style={setBgCondition(fitnessPlan.type)}>{ fitnessPlan.name }</Card.Header>
-                        <Card.Body>
-                            <small>Reps: { fitnessPlan.reps }</small>
-                            <small>Sets: { fitnessPlan.sets }</small>
-                        </Card.Body>
-                        <Card.Footer>
-                        </Card.Footer>
-                    </Card>
-            }
+                </Card.Footer>
+            </Card>
             <DeleteConfirmationModal 
                 showModal={showDeleteConfirmationModal}
                 confirmModal={clearFitnessPlan}

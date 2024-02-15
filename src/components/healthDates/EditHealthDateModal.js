@@ -8,11 +8,11 @@ import messages from '../shared/AutoDismissAlert/messages'
 const EditHealthDateModal = (props) => {
 
     const { user, show, handleClose, updateHealthDate, msgAlert, triggerRefresh } = props
-    console.log('props in edit health date modal = ', props)
+    // console.log('props in edit health date modal = ', props)
 
     const [ healthDateForm, setHealthDateForm ] = useState(props.healthDate)
 
-    console.log('in edithdmodal -> healthDateForm = ', healthDateForm)
+    // console.log('in edithdmodal -> healthDateForm = ', healthDateForm)
     const [ updated, setUpdated ] = useState(false)
 
     const handleModalClose = () => {
@@ -25,12 +25,11 @@ const EditHealthDateModal = (props) => {
         }
     }, [updated])
 
-    console.log('compare hds: ')
-    console.log('healthDateForm._id  = ', healthDateForm._id)
-    console.log('props.healthDate._id  = ', props.healthDate._id)
-    console.log('compare them  = ', props.healthDate._id === healthDateForm._id)
+    // console.log('compare hds: ')
+    // console.log('healthDateForm._id  = ', healthDateForm._id)
+    // console.log('props.healthDate._id  = ', props.healthDate._id)
+    // console.log('compare them  = ', props.healthDate._id === healthDateForm._id)
     
-
     const onChange = (evt) => {
         evt.persist()
 
