@@ -94,10 +94,14 @@ const FitnessPlanShow = (props) => {
                     {
                         fitnessPlan.completed
                         ?
-                        <FontAwesomeIcon 
-                            icon={faCheck} 
-                            className="text-success cursor" 
-                        />
+                        <div className='d-inline-block'>
+                            &nbsp; &nbsp;
+                            <FontAwesomeIcon 
+                                icon={faCheck} 
+                                className="text-dark cursor" 
+                            />
+
+                        </div>
                         :
                         <></>
                     }
