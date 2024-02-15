@@ -75,7 +75,7 @@ const NewClassModal = (props) => {
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Add a class for { healthDate.dateString }</Modal.Title>
+                <Modal.Title>Add Class for { healthDate.dateString }</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <ClassForm 

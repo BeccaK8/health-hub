@@ -83,9 +83,13 @@ const ClassForm = (props) => {
                         onChange={handleChange}
                     />
                 </Form.Group>
-                <div className='card-btn-group'>
-                    <Button className="card-btn m-2" type="submit">Save</Button>
-                    <Button className="btn-secondary m-2" onClick={handleCancel}>Cancel</Button>
+                <div className='card-btn-group-end'>
+                    <Button variant="default" onClick={handleCancel}>
+                        Cancel
+                    </Button>
+                    <Button variant="success" type="submit">
+                        Save
+                    </Button>
                 </div>
             </Form>
         </Container>

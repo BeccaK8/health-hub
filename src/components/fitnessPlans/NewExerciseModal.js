@@ -68,7 +68,9 @@ const NewExerciseModal = (props) => {
 
     return (
         <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton />
+            <Modal.Header closeButton >
+                <Modal.Title>Add Exercise for { healthDate.dateString }</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 <ExerciseForm 
                     fitnessPlan={newExercise}
