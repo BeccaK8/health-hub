@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Card, Button } from "react-bootstrap"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit ,faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { get_formatted_health_date } from "../../lib/health_date_helper_functions"
 import HealthDateForm from "../shared/HealthDateForm"
 import { createHealthDate, updateHealthDate, removeHealthDate } from '../../api/healthDate'
 import messages from '../shared/AutoDismissAlert/messages'
 import EditHealthDateModal from './EditHealthDateModal'
+import DeleteConfirmationModal from '../shared/DeleteConfirmationModal'
 import FitnessPlanShow from '../fitnessPlans/FitnessPlanShow'
 import NewClassModal from '../fitnessPlans/NewClassModal'
 import NewExerciseModal from '../fitnessPlans/NewExerciseModal'
@@ -28,6 +31,7 @@ const HealthDateShow = (props) => {
         focusArea: ''
     })
     const [editModalShow, setEditModalShow] = useState(false)
+    const [deleteModalShow, setDeleteModalShow] = useState(false)
     const [classModalShow, setClassModalShow] = useState(false)
     const [exerciseModalShow, setExerciseModalShow] = useState(false)
     const [updated, setUpdated] = useState(false)
@@ -38,9 +42,9 @@ const HealthDateShow = (props) => {
     }
     
     useEffect(() => {
-        console.log('is this even being called????????')
+        // console.log('is this even being called????????')
         setNewHealthDate(healthDate)
-        console.log('reset new health date',  newHealthDate)
+        // console.log('reset new health date',  newHealthDate)
     }, [updated])
 
     const onCreateChange = (evt) => {
@@ -62,7 +66,7 @@ const HealthDateShow = (props) => {
 
     const onCreateSubmit = (evt) => {
         evt.preventDefault()
-        console.log('new health date: ', newHealthDate)
+        // console.log('new health date: ', newHealthDate)
         createHealthDate(user, newHealthDate)
             .then(() => triggerShowRefresh())
             .then(() => {
@@ -163,19 +167,17 @@ const HealthDateShow = (props) => {
                         dateFound && isPlannable
                         ?
                             <div className='card-btn-group'>
-                                <Button
-                                    className="m-2 card-btn"
-                                    onClick={() => setEditModalShow(true)}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    className="m-2"
-                                    variant="danger"
-                                    onClick={() => clearDayCompletely(true)}
-                                >
-                                    Delete
-                                </Button>
+                                <FontAwesomeIcon 
+                                    icon={faEdit} 
+                                    className="text-dark cursor" 
+                                    onClick={() => setEditModalShow(true)} 
+                                />
+                                &nbsp; &nbsp;
+                                <FontAwesomeIcon 
+                                    icon={faTrash} 
+                                    className="text-danger cursor" 
+                                    onClick={() => setDeleteModalShow(true)} 
+                                />
                             </div>
                         :
                             dateFound && !isPlannable
@@ -231,6 +233,12 @@ const HealthDateShow = (props) => {
                 handleClose={() => setEditModalShow(false)}
                 healthDate={healthDate}
                 triggerRefresh={triggerShowRefresh}
+            />
+            <DeleteConfirmationModal 
+                showModal={deleteModalShow}
+                confirmModal={clearDayCompletely}
+                handleClose={() => setDeleteModalShow(false)}
+                message={`Are you sure you want to delete goal statement, focus area, and plans for ${ healthDate.dateString }?`}
             />
             <NewClassModal
                 healthDate={healthDate}

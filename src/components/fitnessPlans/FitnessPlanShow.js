@@ -111,7 +111,6 @@ const FitnessPlanShow = (props) => {
                 confirmModal={clearFitnessPlan}
                 handleClose={() => setShowDeleteConfirmationModel(false)}
                 message={`Are you sure you want to delete ${ fitnessPlan.name }?`}
-
             />
         </>
     )
