@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Card } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faEdit, faTrash, faX } from '@fortawesome/free-solid-svg-icons'
 
 import { updateFitnessPlan, removeFitnessPlan } from '../../api/fitnessPlan'
 import messages from '../shared/AutoDismissAlert/messages'
@@ -166,12 +166,30 @@ const FitnessPlanShow = (props) => {
                                     isTrackable
                                     ?
                                     <>
-                                        <FontAwesomeIcon 
-                                            icon={faCheck} 
-                                            className="text-success cursor" 
-                                            onClick={() => setCompletePlanModalShow(true)}
-                                        />
-                                        &nbsp; &nbsp;
+                                        {
+                                            fitnessPlan.completed
+                                            ?
+                                                <FontAwesomeIcon 
+                                                    icon={faX} 
+                                                    className="text-danger cursor" 
+                                                    onClick={() => setCompletePlanModalShow(true)}
+                                                />
+                                            :
+                                                <FontAwesomeIcon 
+                                                    icon={faCheck} 
+                                                    className="text-success cursor" 
+                                                    onClick={() => setCompletePlanModalShow(true)}
+                                                />
+
+                                        }
+                                        {
+                                            isPlannable
+                                            ?
+                                            <>&nbsp; &nbsp;</>
+                                            :
+                                            <></>
+                                        }
+                                        
                                     </>
                                     :
                                     <></>
@@ -238,8 +256,8 @@ const FitnessPlanShow = (props) => {
                 }
                 message={
                     fitnessPlan.completed 
-                    ? `Uncheck if you did not complete ${ fitnessPlan.name }: `
-                    : `Check if you completed ${ fitnessPlan.name }: `}
+                    ? `Uncheck if you did not complete ${ fitnessPlan.name }`
+                    : `Check if you completed ${ fitnessPlan.name }`}
             />
             <DeleteConfirmationModal 
                 showModal={deleteModalShow}

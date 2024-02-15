@@ -58,15 +58,15 @@ const CompletePlanModal = (props) => {
                     <Modal.Title>Complete Confirmation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <br />
-                    <div className={ fitnessPlan.completed ? 'alert alert-danger' : 'alert alert-success'}>
-                        {message} &nbsp;&nbsp;
-                        <Form.Check 
-                            name="completed"
-                            defaultChecked={ fitnessPlan.completed }
-                            onChange={handleChange}
-                        />
-                    </div>
+                        <Form.Group>
+                            <Form.Check 
+                                label={message}
+                                name="completed"
+                                defaultChecked={ fitnessPlan.completed }
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+
                 </Modal.Body>
                 <Modal.Footer>
                     <div className='card-btn-group-end'>
