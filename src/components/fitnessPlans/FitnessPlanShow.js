@@ -7,6 +7,7 @@ import { removeFitnessPlan } from '../../api/fitnessPlan'
 import messages from '../shared/AutoDismissAlert/messages'
 import DeleteConfirmationModal from '../shared/DeleteConfirmationModal'
 import EditClassModal from './EditClassModal'
+import EditExerciseModal from './EditExerciseModal'
 
 const setBgCondition = (planType) => {
     if (planType === 'ClassPlan') {
@@ -119,6 +120,15 @@ const FitnessPlanShow = (props) => {
                 fitnessPlan={fitnessPlan}
                 show={editClassModalShow}
                 handleClose={() => setEditClassModalShow(false)}
+                msgAlert={msgAlert}
+                triggerRefresh={triggerRefresh}
+            />
+            <EditExerciseModal
+                user={user}
+                healthDate={healthDate}
+                fitnessPlan={fitnessPlan}
+                show={editExerciseModalShow}
+                handleClose={() => setEditExerciseModalShow(false)}
                 msgAlert={msgAlert}
                 triggerRefresh={triggerRefresh}
             />

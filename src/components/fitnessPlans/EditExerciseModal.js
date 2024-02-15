@@ -5,12 +5,12 @@
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 
-import ClassForm from '../shared/ClassForm'
+import ExerciseForm from '../shared/ExerciseForm'
 import messages from '../shared/AutoDismissAlert/messages'
 import { updateFitnessPlan } from '../../api/fitnessPlan'
 
-const EditClassModal = (props) => {
-
+const EditExerciseModal = (props) => {
+    // pull important things from props
     const { user, show, handleClose, msgAlert, triggerRefresh, healthDate } = props
 
     const [fitnessPlan, setFitnessPlan] = useState(props.fitnessPlan)
@@ -21,14 +21,11 @@ const EditClassModal = (props) => {
             const updatedName = evt.target.name
             let updatedValue = evt.target.value
 
-            if (updatedName === 'isVirtual' && evt.target.checked) {
-                updatedValue = true
-            } else if (updatedName === 'isVirtual' && !evt.target.checked) {
-                updatedValue = false
+            if (evt.target.type === 'number' && evt.target.value && evt.target.value.length > 0) {
+                updatedValue = parseInt(evt.target.value)
             }
 
             const updatedFPlan = { [updatedName] : updatedValue }
-
             return {
                 ...prevFPlan, ...updatedFPlan
             }
@@ -59,10 +56,10 @@ const EditClassModal = (props) => {
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Update Class</Modal.Title>
+                <Modal.Title>Update Exercise</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <ClassForm 
+                <ExerciseForm 
                     fitnessPlan={fitnessPlan}
                     handleChange={onChange}
                     handleSubmit={onSubmit}
@@ -73,4 +70,4 @@ const EditClassModal = (props) => {
     )
 }
 
-export default EditClassModal
+export default EditExerciseModal

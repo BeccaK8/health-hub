@@ -82,7 +82,7 @@ const NewClassModal = (props) => {
                     fitnessPlan={newClass}
                     handleChange={onChange}
                     handleSubmit={onSubmit}
-                    heading={`Add a class for ${ healthDate.dateString }`}
+                    handleCancel={handleClose}
                 />
             </Modal.Body>
         </Modal>

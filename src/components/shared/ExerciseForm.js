@@ -2,11 +2,10 @@ import { Form, Button, Container } from 'react-bootstrap'
 
 const ExerciseForm = (props) => {
 
-    const { fitnessPlan, handleChange, handleSubmit, heading } = props
+    const { fitnessPlan, handleChange, handleSubmit, handleCancel } = props
 
     return (
         <Container className="justify-content-center">
-            <h3>{ heading }</h3>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='m-2'>
                     <Form.Label>Focus Area:</Form.Label>
@@ -72,7 +71,7 @@ const ExerciseForm = (props) => {
 
                 <div className='card-btn-group'>
                     <Button className="card-btn m-2" type="submit">Save</Button>
-                    {/* <Button className="btn-secondary m-2" onClick={handleCancel}>Cancel</Button> */}
+                    <Button className="btn-secondary m-2" onClick={handleCancel}>Cancel</Button>
                 </div>
             </Form>
         </Container>

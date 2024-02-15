@@ -74,7 +74,7 @@ const NewExerciseModal = (props) => {
                     fitnessPlan={newExercise}
                     handleChange={onChange}
                     handleSubmit={onSubmit}
-                    heading={`Add an exercise for ${ healthDate.dateString }`}
+                    handleCancel={handleClose}
                 />
             </Modal.Body>
         </Modal>
