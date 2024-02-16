@@ -9,6 +9,10 @@ const CompletePlanModal = (props) => {
 
     const [fitnessPlan, setFitnessPlan] = useState(props.fitnessPlan)
 
+    const setBgComplete = (completed) => {
+        return (completed) ? ({ backgroundColor: '#FFCCCB' }) : ({ backgroundColor: '#CDFFCD'})
+    }
+
     const handleChange = (evt) => {
         evt.persist()
         setFitnessPlan( prevFPlan => {
@@ -58,6 +62,7 @@ const CompletePlanModal = (props) => {
                     <Modal.Title>Complete Confirmation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <div className="modal-complete p-2" style={setBgComplete(fitnessPlan.completed)}>
                         <Form.Group>
                             <Form.Check 
                                 label={message}
@@ -66,7 +71,7 @@ const CompletePlanModal = (props) => {
                                 onChange={handleChange}
                             />
                         </Form.Group>
-
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <div className='card-btn-group-end'>

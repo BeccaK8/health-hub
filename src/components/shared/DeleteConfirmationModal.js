@@ -9,8 +9,7 @@ const DeleteConfirmationModal = (props) => {
                 <Modal.Title>Delete Confirmation</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <br />
-                <div className="alert alert-danger">{message}</div>
+                <div className="modal-alert p-2">{message}</div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="default" onClick={handleClose}>

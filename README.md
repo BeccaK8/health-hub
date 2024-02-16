@@ -4,7 +4,12 @@
 
 It is a MERN Stack client application, built with React and Node.js and interacts with the [Health API](https://github.com/BeccaK8/health-api) (built with MongoDB/Mongoose and Express.js)
 
-URL: https://myhealthhub.netlify.app/
+
+## Getting Started
+
+Client URL: https://myhealthhub.netlify.app/
+
+API URL: https://health-api-rlk.fly.dev
 
 
 ## User Stories
@@ -40,27 +45,29 @@ Note: A user will not have a health date created for a specific date until they 
 - AAU, I want to change an exercise I have planned for a particular date
 - AAU, I want to remove a class I have planned for a particular date
 - AAU, I want to remove an exercise I have planned for a particular date
+- AAU, I want to mark a class as completed
+- AAU, I want to mark a class as not completed
+- AAU, I want to mark an exercise as completed
+- AAU, I want to mark an exercise as not completed
 
-Trello board for managing client application user stories:
 
-![Client Trello Board](./public/assets/readme/us_client.png)
-
-
-## Wireframes
+## Screenshots and Wireframes
 
 Main "Show" page with navigation bar and calendar navigation
 
-![Main Show Page](./public/assets/readme/wf_mainshow.png)
+<img width="500" alt="Main Show Page" src="./public/assets/readme/ss_mainshow.png">
 
 Modals to Add, Update, and Delete Exercise and Class Fitness Plans
 
-![Modals for CUD Fitness Plans](./public/readme/wf_fitnessPlanCUD.png)
+<img width="300" alt="Class Form" src="./public/assets/readme/ss_classForm.png">
+<img width="300" alt="Exercise Form" src="./public/assets/readme/ss_exerciseForm.png">
+<img width="300" alt="Delete Confirmation" src="./public/assets/readme/ss_deleteConfirmation.png">
 
 User Profile Screen
 
-![User Profile](./public/assets/readme/wf_userprofile.png)
+<img width="300" alt="User Profile" src="./public/assets/readme/ss_userProfile.png">
 
-Personal Fitness Goals Index Page
+Personal Fitness Goals Index Page (Coming Soon!)
 
 ![Personal Goals Index](./public/assets/readme/wf_personalGoalsIndex.png)
 
@@ -71,9 +78,17 @@ Personal Fitness Goals Index Page
 - React
 - Node.js
 - Token Authentication
-- CSS, Bootstrap
+- CSS, Bootstrap, React Bootstrap, Sass
 
 
 ## Next Steps / Ice Box
 
-Coming soon...
+- AAU, I want to set goals for myself and track completion towards those on a daily basis
+- AAU, I want to see metrics of my completed vs uncompleted focus plans
+- AAU, I want to track health plans like water and diet
+- AAU, I want to track mental stimulation plans like reading or puzzles
+- AAU, I want to pick from a master list of exercises
+- AAU, I want to save my favorites exercises to pick from
+- AAU, I want to pick from a master list of classes
+- AAU, I want to save my favorites classes to pick from
+- AAU, I want to see a schedule of my time-based classes
