@@ -54,7 +54,8 @@ const HealthDateShow = (props) => {
         setNewHealthDate( prevHealthDate => {
             const updatedName = evt.target.name
             let updatedValue = evt.target.value
-
+            // console.log('showDate = ', showDate)
+            // console.log('newHealthDate = ',  newHealthDate)
             const updatedHealthDate = { 
                 [updatedName] : updatedValue,
                 dateString: showDate
@@ -68,6 +69,7 @@ const HealthDateShow = (props) => {
 
     const onCreateSubmit = (evt) => {
         evt.preventDefault()
+        // console.log('showDate = ', showDate)
         // console.log('new health date: ', newHealthDate)
         createHealthDate(user, newHealthDate)
             .then(() => triggerShowRefresh())
